@@ -9,3 +9,13 @@ two:
   id: 2
   username: みどり
   email: midori@test.com
+
+three:
+  id: 3
+  username: 友達一杯
+  email: friends@test.com
+
+four:
+  id: 4
+  username: 友達なし
+  email: nashi@test.com

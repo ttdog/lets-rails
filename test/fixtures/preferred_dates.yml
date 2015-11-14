@@ -1,9 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  day: 2015-11-14
+  year: 2015
+  month: 11
+  day: 15
   user_id: 1
 
 two:
-  day: 2015-11-14
+  year: 2015
+  month: 11
+  day: 18
   user_id: 1
