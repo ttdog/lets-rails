@@ -9,7 +9,7 @@ class API < Grape::API
   end
 
   post "user/" do
-    if params[:username] && params[:email]
+    if params[:username]
       user = User.new(username: params[:username], email: params[:email])
       if user.save
         {:result => "true", :id => user.id}.as_json
@@ -21,6 +21,7 @@ class API < Grape::API
 
   post "preferred_date/" do
     if params[:user_id]
+      #TODO: findに失敗するとエラーが発生するが
       user = User.find(params[:user_id])
       if user
         #ここでuserに紐づく形で希望日の登録
@@ -37,7 +38,22 @@ class API < Grape::API
     else
       {:result => "false"}.as_json
     end
-
   end
 
+  get "invite/" do
+    if params[:user_id]
+      cookies[:invite_id] = {
+        value: params[:user_id],
+        expires: 1.year.from_now,
+        domain: '.amazonaws.com',
+        path: '/'
+      }
+    end
+    {:id => params[:user_id]}.as_json
+#    redirect 'http://yahoo.co.jp'
+  end
+
+  get "temp/" do
+    {:id => cookies[:invite_id]}.as_json
+  end
 end
