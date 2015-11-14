@@ -49,8 +49,13 @@ class API < Grape::API
         path: '/'
       }
     end
-    {:id => params[:user_id]}.as_json
+    #アプリのストア
 #    redirect 'http://yahoo.co.jp'
+  end
+
+  get "landing/" do
+    #アプリに遷移
+    #redirect "path://ab/?invite_id=#{cookies[:invite_id]}"
   end
 
   get "temp/" do
