@@ -47,10 +47,10 @@ class API < Grape::API
 
             friends.each do |friend|
   #            dates = PreferredDate.where("user_id = ?", friend).order("created_at DESC").limit(7).
-              isMatch = PreferredDate.where("user_id = ? and year = ? and month = ? and day = ?", friend, params[:year], params[:month], params[:day])
+              isMatch = PreferredDate.where("user_id = ? and year = ? and month = ? and day = ?", friend.friend_id, params[:year], params[:month], params[:day])
 
-              if isMatch
-                match_dates.push(isMatch)
+              if isMatch.length != 0
+                match_dates.push(isMatch.first)
               end
             end
 
@@ -65,9 +65,9 @@ class API < Grape::API
             else
               {:result => true, :id => date.id, :year => params[:year], :month => params[:month], :day => params[:day], :match => false, :friend => {}}.as_json
             end
+          else
+            {:result => true, :id => date.id, :year => params[:year], :month => params[:month], :day => params[:day], :match => false, :friend => {}}.as_json            
           end
-
-          {:result => true, :id => date.id, :year => params[:year], :month => params[:month], :day => params[:day], :match => false, :friend => {}}.as_json
         else
           {:result => "false"}.as_json
         end
