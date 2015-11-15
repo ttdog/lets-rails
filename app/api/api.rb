@@ -1,5 +1,20 @@
+require 'net/http'
+require 'uri'
+
 class API < Grape::API
   format :json
+
+  helpers do
+    def PostSlack
+      data = { "text" => "message" }
+request_url = "https://hooks.slack.com/services/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"
+uri = URI.parse(request_url)
+Net::HTTP.post_form(uri, {"payload" => data}.as_json)
+      # res = Net::HTTP.post_form(URI.parse("https://hooks.slack.com/services/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"),
+      #                       {"payload" =>{"text" => "this is message from Pink"}}.as_json)
+    end
+  end
+
   get "user/:user_id" do
     user = User.where(id: params[:user_id]).first
 
@@ -66,7 +81,7 @@ class API < Grape::API
               {:result => true, :id => date.id, :year => params[:year], :month => params[:month], :day => params[:day], :match => false, :friend => {}}.as_json
             end
           else
-            {:result => true, :id => date.id, :year => params[:year], :month => params[:month], :day => params[:day], :match => false, :friend => {}}.as_json            
+            {:result => true, :id => date.id, :year => params[:year], :month => params[:month], :day => params[:day], :match => false, :friend => {}}.as_json
           end
         else
           {:result => "false"}.as_json
@@ -100,4 +115,9 @@ class API < Grape::API
   get "temp/" do
     {:id => cookies[:invite_id]}.as_json
   end
+
+  get "test/" do
+    PostSlack()
+  end
+
 end
